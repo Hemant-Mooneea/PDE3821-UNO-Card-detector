@@ -64,7 +64,7 @@ root.configure(bg="#fff")
 root.resizable(True, True)
 
 # Load and display the image (500x500)
-img = PhotoImage(file="coursework1/uno.png")
+img = PhotoImage(file="uno.png")
 image_label = Label(root, image=img, bg='white')
 image_label.place(x=30, y=25)  # Slight adjustment to y for better centering
 
