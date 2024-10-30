@@ -1,9 +1,9 @@
-#to be run in google colab
+#DISCLAIMER: this code was run on google colab
 import numpy as np
 import cv2
 import os
-from tensorflow.keras.applications import VGG16  # Or MobileNet, ResNet, etc.
-from tensorflow.keras.applications.vgg16 import preprocess_input
+from tensorflow.keras.applications import MobileNetV2  # Or MobileNet, ResNet, etc.
+from tensorflow.keras.applications.mobilenet_v2 import preprocess_input
 from tensorflow.keras.preprocessing.image import img_to_array
 from sklearn.model_selection import train_test_split
 from sklearn.neighbors import KNeighborsClassifier
@@ -13,12 +13,12 @@ from sklearn.metrics import accuracy_score
 data_dir = '/content/Data'
 
 # Load the pre-trained model without the top layers (output layer)
-base_model = VGG16(weights="imagenet", include_top=False, input_shape=(256, 256, 3))
+base_model = MobileNetV2(weights="imagenet", include_top=False, input_shape=(224, 224, 3))
 
 # Function to extract features using VGG16
 def extract_features(image):
     # Preprocess image for the pre-trained model
-    image = cv2.resize(image, (256, 256))
+    image = cv2.resize(image, (224, 224))
     image = img_to_array(image)
     image = np.expand_dims(image, axis=0)
     image = preprocess_input(image)
