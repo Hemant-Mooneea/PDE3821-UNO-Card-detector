@@ -8,7 +8,7 @@ from tkinter import *
 from tkinter import PhotoImage
 
 #* loading the saved SVM model
-modelFilename = 'svm_uno_model3.pkl'
+modelFilename = 'svm_uno_model4.pkl'
 svm = joblib.load(modelFilename)
 
 #* loading the MobileNetV2 model for extracting features
