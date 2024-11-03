@@ -10,8 +10,7 @@ def button_action(button_name):
     elif button_name == "Button 3":
         root.quit()  
 
-
-# Function to open the first window
+# Function to open the first window (Live Camera)
 def open_window_1():
     root.withdraw()  # Hide the main window
     window_1 = Toplevel(root)  # Create a new window
@@ -20,16 +19,17 @@ def open_window_1():
     
     label = Label(window_1, text="This is the Camera window", font=("Arial", 18))
     label.place(x=10, y=10)
-    
+
     # Function to close the new window and show the main window again
     def on_close():
         window_1.destroy()  
         root.deiconify()  # Show the main window again
-    
-    close_button = Button(window_1, text="Close", command=on_close, font=("Arial", 14))
-    close_button.place(x=900, y=10)  
 
-# Function to open the second window
+    window_1.protocol("WM_DELETE_WINDOW", on_close)  # Bind red close button
+    close_button = Button(window_1, text="Close", command=on_close, font=("Arial", 14))
+    close_button.place(x=900, y=10)
+
+# Function to open the second window (Photo Detection)
 def open_window_2():
     root.withdraw()  # Hide the main window
     window_2 = Toplevel(root)  
@@ -40,28 +40,30 @@ def open_window_2():
     label = Label(window_2, text="This is the Photo Detection window", font=("Arial", 18))
     label.place(x=10, y=10)
 
-    
+    # Function to close the new window and exit the application
     def on_close():
-        window_2.destroy()  # Close the new window
-        root.deiconify() 
+        root.quit()  # Close the entire application
 
+    window_2.protocol("WM_DELETE_WINDOW", on_close)  # Bind red close button to quit
     close_button = Button(window_2, text="Close", command=on_close, font=("Arial", 14))
-    close_button.place(x=900, y=10)  
-
+    close_button.place(x=900, y=10)
 
 # Create the main window
 root = Tk()
 root.title("UNO Card Detection")
-
 root.geometry("1000x550+300+200")
 root.configure(bg="#fff")
-
-# Allow the window to be resizable
 root.resizable(True, True)
 
-img = PhotoImage(file="uno.png")
-image_label = Label(root, image=img, bg='white')
-image_label.place(x=30, y=25)  
+# Load image for the main window
+try:
+    img = PhotoImage(file="uno.png")
+    image_label = Label(root, image=img, bg='white')
+    image_label.place(x=30, y=25)
+except Exception as e:
+    print("Error loading image:", e)
+
+# Frame setup in the main window
 frame = Frame(root, bg="white")
 frame.place(x=500, y=70, width=400, height=350)  
 
@@ -73,7 +75,7 @@ subheading = Label(frame, text='UNO Detection Card', fg='black', bg='white',
                    font=("Verdana", "15", "italic"))  
 subheading.place(x=130, y=75)  
 
-# Create buttons
+# Create buttons in the main window
 button1 = Button(frame, text="Open Camera", command=lambda: button_action("Button 1"), 
                  bg="#57a1f8", fg="white", font=("Arial", 14), relief="flat")
 button1.place(x=100, y=170, width=300, height=40)
@@ -85,6 +87,5 @@ button2.place(x=100, y=240, width=300, height=40)
 button3 = Button(frame, text="Exit", command=lambda: button_action("Button 3"), 
                  bg="#57a1f8", fg="white", font=("Arial", 14), relief="flat")
 button3.place(x=100, y=310, width=300, height=40)
-
 
 root.mainloop()
