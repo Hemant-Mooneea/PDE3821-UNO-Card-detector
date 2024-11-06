@@ -40,7 +40,7 @@ cd PDE3821-UNO-Card-detector
 pip install -r requirements.txt
 ```
 
-> **Requirements**: This project relies on Python 3.x, YOLOv8, OpenCV, and other dependencies listed in `requirements.txt`.
+> **Requirements**: This project relies on Python 3.12, YOLOv8, OpenCV, and other dependencies listed in `requirements.txt`.
 
 ## Usage
 To run the program, run:
