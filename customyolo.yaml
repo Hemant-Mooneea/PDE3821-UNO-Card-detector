@@ -1,36 +1,68 @@
-# YOLOv8s equivalent architecture configuration
-nc: 54  # number of classes
-depth_multiple: 0.33  # scales module repeats
-width_multiple: 0.50  # scales convolution channels
 
+nc: 54  #? model set up for 54 classes
+depth_multiple: 0.33  #? controls number of times each layer is repeated throughout the network. Smaller the value means faster model
+width_multiple: 0.50  #? adjusts the number of filters in each convolutional layer 
+
+
+"""
+The backbone is where the model extracts the features from the image
+Each line with the '-' defines one layer or block in the model
+
+[from, repeats, module, args]
+- from: refers to the previous layer's output (-1 means from the last layer)
+- repeats: specifies how many times to repeat the layer
+- module: the type of layer, e.g Conv for convolutional layer
+- args: arguments for the layer, like filters or kernel size
+
+[-1, 1, Conv, [64, 3, 2]]
+is a Convolutional layer with 64 filters, kernel size of 3 and a stride of 2
+
+C2f is a specialized convolution block that further processes features
+SPPF (Spatial Pyramid Pooling Fast) is a layer that pools features from different parts of the image, 
+helping yolo detect objects at multiple scales
+
+"""
 backbone:
-  # [from, repeats, module, args]
-  - [-1, 1, Conv, [64, 3, 2]]  # 0-P1/2
-  - [-1, 1, Conv, [128, 3, 2]]  # 1-P2/4
+  #* [from, repeats, module, args]
+  - [-1, 1, Conv, [64, 3, 2]]  
+  - [-1, 1, Conv, [128, 3, 2]]  
   - [-1, 3, C2f, [128, True]]
-  - [-1, 1, Conv, [256, 3, 2]]  # 3-P3/8
+  - [-1, 1, Conv, [256, 3, 2]]  
   - [-1, 6, C2f, [256, True]]
-  - [-1, 1, Conv, [512, 3, 2]]  # 5-P4/16
+  - [-1, 1, Conv, [512, 3, 2]]  
   - [-1, 6, C2f, [512, True]]
-  - [-1, 1, Conv, [1024, 3, 2]]  # 7-P5/32
+  - [-1, 1, Conv, [1024, 3, 2]]  
   - [-1, 3, C2f, [1024, True]]
-  - [-1, 1, SPPF, [1024, 5]]  # 9
+  - [-1, 1, SPPF, [1024, 5]] 
 
+
+"""
+The head part of the network combines features from different levels and makes the 
+final predictions(object classes and bounding boxes)
+
+Upsample increases the resolution of the feature map by a factor of 2, helping detect smaller objects
+
+Concat combines the current upsampled feature map with a previous feature map to retain information 
+from different levels
+
+[[15, 18, 21], 1, Detect, [nc]] is the final layer that makes the predictions. It takes input from
+the feature maps at differet scales and outputs the classes and bounding boxes for each object in the image
+"""
 head:
   - [-1, 1, nn.Upsample, [None, 2, 'nearest']]
-  - [[-1, 6], 1, Concat, [1]]  # cat backbone P4
-  - [-1, 3, C2f, [512]]  # 12
+  - [[-1, 6], 1, Concat, [1]]
+  - [-1, 3, C2f, [512]]  
 
   - [-1, 1, nn.Upsample, [None, 2, 'nearest']]
-  - [[-1, 4], 1, Concat, [1]]  # cat backbone P3
-  - [-1, 3, C2f, [256]]  # 15 (P3/8-small)
+  - [[-1, 4], 1, Concat, [1]]  
+  - [-1, 3, C2f, [256]]  
 
   - [-1, 1, Conv, [256, 3, 2]]
-  - [[-1, 12], 1, Concat, [1]]  # cat head P4
-  - [-1, 3, C2f, [512]]  # 18 (P4/16-medium)
+  - [[-1, 12], 1, Concat, [1]]  
+  - [-1, 3, C2f, [512]]  
 
   - [-1, 1, Conv, [512, 3, 2]]
-  - [[-1, 9], 1, Concat, [1]]  # cat head P5
-  - [-1, 3, C2f, [1024]]  # 21 (P5/32-large)
+  - [[-1, 9], 1, Concat, [1]]  
+  - [-1, 3, C2f, [1024]]  
 
-  - [[15, 18, 21], 1, Detect, [nc]]  # Detect(P3, P4, P5)
+  - [[15, 18, 21], 1, Detect, [nc]]
