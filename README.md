@@ -36,6 +36,15 @@ git clone https://github.com/Hemant-Mooneea/PDE3821-UNO-Card-detector.git
 cd PDE3821-UNO-Card-detector
 pip install -r requirements.txt
 ```
+**PyTorch Installation (for GPU Inference)**
+
+To enable GPU inference for faster processing, you’ll need to install PyTorch with CUDA support. Follow these steps
+
+1. **Check CUDA Availability**: Ensure your system has an NVIDIA GPU that supports CUDA.
+
+2. **Install PyTorch with CUDA**:
+   Visit the [PyTorch installation page](https://pytorch.org/get-started/locally/) 
+
 
 > **Requirements**: This project relies on Python 3.12, YOLOv8, OpenCV, and other dependencies listed in `requirements.txt`.
 
