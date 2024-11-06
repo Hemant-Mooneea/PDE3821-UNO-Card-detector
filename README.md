@@ -45,6 +45,51 @@ To enable GPU inference for faster processing, you’ll need to install PyTorch 
 2. **Install PyTorch with CUDA**:
    Visit the [PyTorch installation page](https://pytorch.org/get-started/locally/) 
 
+**Image Augmentation during training**
+
+To have the augmentation during training similar to what was done for this model do the following
+1. Navigate to the folder/virtual environment where the python libraries are installed
+2. Navigated to the "Lib" folder 
+3. Inside of the "site-packages" folder look for another folder called "ultralytics"
+4. Inside of "ultralytics" find the "cfg" folder
+5. Inside the "cfg" folder look for "default.yaml" and scroll downwards 
+6. Finally replace the hyperparameters with the ones below
+
+```
+# Hyperparameters ------------------------------------------------------------------------------------------------------
+lr0: 0.01 # (float) initial learning rate (i.e. SGD=1E-2, Adam=1E-3)
+lrf: 0.01 # (float) final learning rate (lr0 * lrf)
+momentum: 0.937 # (float) SGD momentum/Adam beta1
+weight_decay: 0.0005 # (float) optimizer weight decay 5e-4
+warmup_epochs: 3.0 # (float) warmup epochs (fractions ok)
+warmup_momentum: 0.8 # (float) warmup initial momentum
+warmup_bias_lr: 0.1 # (float) warmup initial bias lr
+box: 7.5 # (float) box loss gain
+cls: 0.5 # (float) cls loss gain (scale with pixels)
+dfl: 1.5 # (float) dfl loss gain
+pose: 12.0 # (float) pose loss gain
+kobj: 1.0 # (float) keypoint obj loss gain
+label_smoothing: 0.0 # (float) label smoothing (fraction)
+nbs: 64 # (int) nominal batch size
+hsv_h: 0.025 # (float) image HSV-Hue augmentation (fraction)
+hsv_s: 0.3 # (float) image HSV-Saturation augmentation (fraction)
+hsv_v: 0.5 # (float) image HSV-Value augmentation (fraction)
+degrees: 15.0 # (float) image rotation (+/- deg)
+translate: 0.2 # (float) image translation (+/- fraction)
+scale: 0.5 # (float) image scale (+/- gain)
+shear: 0.0 # (float) image shear (+/- deg)
+perspective: 0.0 # (float) image perspective (+/- fraction), range 0-0.001
+flipud: 0.0 # (float) image flip up-down (probability)
+fliplr: 0.0 # (float) image flip left-right (probability)
+bgr: 0.0 # (float) image channel BGR (probability)
+mosaic: 0.8 # (float) image mosaic (probability)
+mixup: 0.0 # (float) image mixup (probability)
+copy_paste: 0.0 # (float) segment copy-paste (probability)
+copy_paste_mode: "flip" # (str) the method to do copy_paste augmentation (flip, mixup)
+auto_augment: randaugment # (str) auto augmentation policy for classification (randaugment, autoaugment, augmix)
+erasing: 0.4
+```
+
 
 > **Requirements**: This project relies on Python 3.12, YOLOv8, OpenCV, and other dependencies listed in `requirements.txt`.
 
