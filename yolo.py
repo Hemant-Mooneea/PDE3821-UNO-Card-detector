@@ -1,19 +1,22 @@
 from ultralytics import YOLO
 
 if __name__ == '__main__':
-    # Load the YOLOv8 model
+    #*loading the YOLOv8 model
     model = YOLO('yolov8s.pt')  
 
-    # Train the model
+    #* training the model
+    #? if there is no improvement in 30 epochs (training rounds), model automatically stops training
+    #? setting pretrained = False so that model does not use any previously learned patterns, 
+    #? it will basically learn everything from scratch based only on our dataset (data.yaml)
     train_results = model.train(data='data.yaml', epochs=500, patience=30, pretrained=False)  
 
-    # Save the trained model
+    #*saving the trained model
     model.save('trained_model.pt')
 
-    # Evaluate the model on the validation set
-    val_results = model.val(data='data.yaml')  # Evaluate on validation set
+    #* evaluating the model on the validation set
+    val_results = model.val(data='data.yaml') 
 
-    # Evaluate the model on the test set
-    test_results = model.val(data='data.yaml', split='test')  # Evaluate on test set
+    #* evaluating the model on the test set
+    test_results = model.val(data='data.yaml', split='test')
 
 
