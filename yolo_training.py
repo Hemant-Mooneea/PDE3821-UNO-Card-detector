@@ -2,7 +2,7 @@ from ultralytics import YOLO
 
 if __name__ == '__main__':
     #*loading the YOLOv8 model
-    model = YOLO('customyolo.yaml')  
+    model = YOLO('yolo.yaml')
 
     #* training the model
     #? if there is no improvement in 30 epochs (training rounds), model automatically stops training

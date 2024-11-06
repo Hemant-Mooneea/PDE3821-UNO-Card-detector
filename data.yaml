@@ -1,8 +1,9 @@
+#* specifies paths to training, validation and test data sets
 train: images/train
 val: images/valid
 test: images/test
 
-nc: 54  # number of classes
+nc: 54  #* number of classes
 names: [
     'blue 0', 'blue 1', 'blue 2', 'blue 3', 'blue 4', 
     'blue 5', 'blue 6', 'blue 7', 'blue 8', 'blue 9', 
