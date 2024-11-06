@@ -9,8 +9,6 @@ A custom YOLOv8-based model for accurately classifying and detecting UNO cards i
 - [Installation](#installation)
 - [Usage](#usage)
 - [Results](#results)
-- [Future Improvements](#future-improvements)
-- [License](#license)
 
 ## Overview
 This project leverages a YOLOv8 model for detecting and classifying UNO cards, trained on a custom dataset of 54 different card types. The primary objective is to recognize individual cards in an image, with efficient processing suitable for real-time applications.
