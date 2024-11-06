@@ -16,11 +16,11 @@ A custom YOLOv8-based model for accurately classifying and detecting UNO cards i
 This project leverages a YOLOv8 model for detecting and classifying UNO cards, trained on a custom dataset of 54 different card types. The primary objective is to recognize individual cards in an image, with efficient processing suitable for real-time applications.
 
 ## Dataset
-The dataset consists of *1144* images** organized into **3 sets**: a train set, validation set and test set
+The dataset consists of **1144 images** organized into **3 sets**: a train set, validation set and test set
 - **Image Size**: Resized to 640x640 pixels.
 - **Annotations**: Bounding boxes around each card to facilitate precise detection.
 
-> Dataset preparation was completed with the help of **YOLO-compatible labeling tools** such as [Label Studio](https://labelstud.io/) and formatted into YOLO’s annotation format.
+> Dataset preparation was completed with the help of **YOLO-compatible labeling tools** namely [Label Studio](https://labelstud.io/) and formatted into YOLO’s annotation format.
 
 ## Model Architecture
 This custom YOLOv8 model configuration has been tailored to efficiently handle the detection and classification of UNO cards. The model uses:
@@ -55,23 +55,7 @@ This will open a GUI menu with options for detection through webcam or file inpu
 To train the model on your dataset, adjust the `data.yaml` file and run:
 
 ```bash
-python yolo_training.py --data data.yaml --epochs 500 --img-size 640
+python yolo_training.py 
 ```
 
-## Results
-After training, the model achieved the following metrics:
 
-- **Test Accuracy**: ~84.48%
-- **Average Precision**: Varies by class, with detailed results in `results.txt`.
-
-Sample detections:
-
-![Sample Detection](images/sample_detection.png)
-
-## Future Improvements
-- **Data Augmentation**: To improve model robustness to lighting and perspective.
-- **Model Optimization**: Experimenting with alternative YOLO configurations for speed-accuracy trade-offs.
-- **Additional Classes**: Expanding the dataset to include custom cards or other game cards.
-
-## License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
